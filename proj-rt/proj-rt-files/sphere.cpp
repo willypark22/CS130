@@ -53,7 +53,7 @@ vec3 Sphere::Normal(const vec3& point, int part) const
 {
     //std::cout << "Entered sphere normal" << std::endl;
     vec3 normal;
-    TODO; compute the normal direction
+    //TODO; compute the normal direction
     //std::cout << "Exit normal" << std::endl;
     return normal;
 }
