@@ -22,8 +22,7 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
-    std::cout << "Entered closest_intersection" << std::endl;
-    //;
+    //std::cout << "Entered closest_intersection" << std::endl;
     int min_t = std::numeric_limits<int>::max();
     Hit closest;
     for(unsigned i = 0; i < this->objects.size(); ++i) {
@@ -35,14 +34,14 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
             }
         }
     }
-    std::cout << "Exit closest_intersection" << std::endl;
+    //std::cout << "Exit closest_intersection" << std::endl;
     return closest;
 }
 
 // set up the initial view ray and call
 void Render_World::Render_Pixel(const ivec2& pixel_index)
 {
-    std::cout << "Entered render pixel" << std::endl;
+    //std::cout << "Entered render pixel" << std::endl;
     //  set up the initial view ray here
     Ray ray;
     vec3 end_point = camera.position;
@@ -51,7 +50,7 @@ void Render_World::Render_Pixel(const ivec2& pixel_index)
     ray.direction = direction;
     vec3 color = Cast_Ray(ray,1);
     camera.Set_Pixel(pixel_index,Pixel_Color(color));
-    std::cout << "Exit render pixel" << std::endl;
+    //std::cout << "Exit render pixel" << std::endl;
 }
 
 void Render_World::Render()
@@ -68,27 +67,27 @@ void Render_World::Render()
 // or the background color if there is no object intersection
 vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
-    std::cout << "Entered cast ray " << std::endl;
+    //std::cout << "Entered cast ray " << std::endl;
     vec3 color;
     //  determine the color here
     Hit hit;
     hit = this->Closest_Intersection(ray);
     if(hit.object != NULL) {
-	std::cout << "entered if" << std::endl;
+	//std::cout << "entered if" << std::endl;
         vec3 intersection_point = ray.Point(hit.dist);
-	std::cout << "out of ray.point" << std::endl;
-	std::cout << "entering normal" << std::endl;
+	//std::cout << "out of ray.point" << std::endl;
+	//std::cout << "entering normal" << std::endl;
         vec3 normal = hit.object->Normal(intersection_point, 0);
-	std::cout << "out of normal" << std::endl;
+	//std::cout << "out of normal" << std::endl;
         color = hit.object->material_shader->Shade_Surface(ray, intersection_point, normal, recursion_depth);
-	std::cout << "out of shade surface" << std::endl;
+	//std::cout << "out of shade surface" << std::endl;
     }
     else {
-	std::cout << "Entered else" << std::endl;
+	//std::cout << "Entered else" << std::endl;
 	vec3 temp;
         color = background_shader->Shade_Surface(ray, temp, temp, recursion_depth);
     }
-    std::cout << "Exit cast ray" << std::endl;
+    //std::cout << "Exit cast ray" << std::endl;
     return color;
 }
 
