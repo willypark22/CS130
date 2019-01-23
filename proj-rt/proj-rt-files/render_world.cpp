@@ -22,7 +22,10 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
-    TODO;
+    //TODO;
+    int min_t = std::numeric_limits<int>::max();
+    for(unsigned i = 0; i < this->objects.size(); i++) {
+        this->objects.at(i)->Intersection(ray, hits);
     return {};
 }
 
