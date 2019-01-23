@@ -43,12 +43,13 @@ vec3 Camera::World_Position(const ivec2& pixel_index)
 {
     vec3 result;
     //TODO;
+    std::cout << "Entered world position" << std::endl;
     vec3 Fp = film_position;
     vec3 u = horizontal_vector;
     vec3 v = vertical_vector;
     vec2 C = Cell_Center(pixel_index);
 
     result = Fp + u*C[0] + v*C[1];
-
+    std::cout << "Exit world position" << std::endl;
     return result;
 }
