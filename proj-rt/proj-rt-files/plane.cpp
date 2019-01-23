@@ -10,7 +10,7 @@ Hit Plane::Intersection(const Ray& ray, int part) const
 {
     //TODO;
     //std::cout << "Entered plane intersection" << std::endl;
-    float t = (dot(normal, (x1 - ray.endpoint))) / dot(normal, ray.direction);
+    double t = (dot(normal, (x1 - ray.endpoint))) / dot(normal, ray.direction);
     
     Hit temp;
     
@@ -20,7 +20,7 @@ Hit Plane::Intersection(const Ray& ray, int part) const
         return temp;
     }
     else {
-        temp.object = NULL;
+        temp = {0, 0, 0};
     }
     //std::cout << "Exit plane intersetion" << std::endl;
     return temp;

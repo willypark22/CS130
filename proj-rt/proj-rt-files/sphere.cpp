@@ -6,37 +6,35 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 {
     //TODO;
     //std::cout << "Entered sphere intersection " << std::endl;
+    Hit hit;
     vec3 u = ray.direction;
     vec3 v = ray.endpoint - center;
     
-    float a = 1; //u dot u = 1
-    float b = 2 * dot(u, v);
-    float c = dot(v, v) - (radius * radius);
-    double value = b*b - 4*a*c;
-    
-    float t0 = (-b - sqrt(value)) / (2*a);
-    float t1 = (-b + sqrt(value)) / (2*a);
-        
-    Hit hit0, hit1;
-    hit0.object = this;
-    hit1.object = this;
-    
-    if(value > 0) {
-	if(t0 > 0) {
-		hit0.dist = t0;
+   // double a = 1; //u dot u = 1
+    double a = ray.direction.magnitude_squared();
+    double b = 2 * dot(u, v);
+    double c = v.magnitude_squared() - (radius * radius);
+    double value = (b*b) - (4*a*c);
+    double t0, t1;
+    if(value < 0) {
+	hit = {0, 0, 0};
+    }
+
+    else {
+	t0 = ((-1)*b + sqrt(value)) / (2*a);
+	t1 = ((-1)*b - sqrt(value)) / (2*a);
+
+	if(t0 < t1 && t0 >= small_t) {
+		hit = {this, t0, 1};
+	}
+	else if(t1 <= t0 && t1 >= small_t) {
+		hit = {this, t1, 1};
 	}
 	else {
-	hit0.dist = 0;
+		hit = {0, 0, 0};
 	}
+    }
     
-        hit1.dist = t1;
-        hit1.part = 0;
-        hit0.part = 0;
-    }
-    else if(value == 0) {
-	hit0.dist = t0;
-	hit0.part = 0;
-    }
     /*if(value < 0) {
         hit0.object = NULL;
     }
@@ -46,15 +44,13 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
         
     */
     //std::cout << "Exit sphere intersection" << std::endl;
-    return hit0;
+    return hit;
 }
 
 vec3 Sphere::Normal(const vec3& point, int part) const
 {
-    //std::cout << "Entered sphere normal" << std::endl;
-    vec3 normal;
-    //TODO; compute the normal direction
-    //std::cout << "Exit normal" << std::endl;
+    vec3 normal = point - center;
+    normal.normalized();
     return normal;
 }
 
