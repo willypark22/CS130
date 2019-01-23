@@ -25,7 +25,7 @@ Hit Render_World::Closest_Intersection(const Ray& ray)
     //TODO;
     int min_t = std::numeric_limits<int>::max();
     for(unsigned i = 0; i < this->objects.size(); i++) {
-        this->objects.at(i)->Intersection(ray, hits);
+        this->objects.at(i)->Intersection(ray);
     return {};
 }
 
