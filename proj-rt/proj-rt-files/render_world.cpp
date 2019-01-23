@@ -57,7 +57,10 @@ void Render_World::Render()
 vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
     vec3 color;
-    TODO; // determine the color here
+    //TODO;  determine the color here
+    Hit closeHit = this->Closest_Intersection(ray);
+    if() {
+        
     return color;
 }
 
