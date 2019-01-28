@@ -34,23 +34,13 @@ Hit Sphere::Intersection(const Ray& ray, int part) const
 		hit = {0, 0, 0};
 	}
     }
-    
-    /*if(value < 0) {
-        hit0.object = NULL;
-    }
-    else if (value == 0) {
-        if(
-        hit0.dist = t0;
-        
-    */
-    //std::cout << "Exit sphere intersection" << std::endl;
     return hit;
 }
 
 vec3 Sphere::Normal(const vec3& point, int part) const
 {
     vec3 normal = point - center;
-    normal.normalized();
+    normal = normal.normalized();
     return normal;
 }
 
