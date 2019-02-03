@@ -25,7 +25,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		diffuseValue += color_diffuse * lightEmitted * std::max(dot(normal, l.normalized()), 0.0);
 
 		//calculate specular
-		//specularValue += color_specular * lightEmitted * std::pow(std::max(dot(r, -(ray.direction)), 0.0), specular_power);
+		specularValue += color_specular * lightEmitted * std::pow(std::max(dot(r, -(ray.direction)), 0.0), specular_power);
 
 	}
 	color = ambientValue + diffuseValue + specularValue;
