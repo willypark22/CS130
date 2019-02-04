@@ -9,17 +9,20 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     const vec3& normal,int recursion_depth) const
 {
 	vec3 color;
-	vec3 l, r, position, lightEmitted, ambientValue, diffuseValue, specularValue;
+	vec3 l, r, position, lightEmitted, ambientValue, diffuseValue, specularValue, lightPosition;
 	
 	//calculate ambient
 	ambientValue = world.ambient_color * world.ambient_intensity * color_ambient;
 
 	for(unsigned i = 0; i < world.lights.size(); ++i) {
+
 		//set up
 		lightPosition = world.lights[i]->position;
 		l = lightPosition - intersection_point;
-		Ray to_light(intersection_point, l);
-		Hit hit = world.Closest_Intersection(to_light);
+		Ray shadowRay;
+		shadowRay.endpoint = intersection_point;
+		shadowRay.direction = l;
+		Hit hit = world.Closest_Intersection(shadowRay);
 		lightEmitted = world.lights[i]->Emitted_Light(l);
 
 		if(!world.enable_shadows || !hit.object) {
