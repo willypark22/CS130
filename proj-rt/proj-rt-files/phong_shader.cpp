@@ -24,8 +24,9 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 		shadowRay.direction = l;
 		Hit hit = world.Closest_Intersection(shadowRay);
 		lightEmitted = world.lights[i]->Emitted_Light(l);
+		vec3 object = shadowRay.Point(hit.dist);
 
-		if(!world.enable_shadows || !hit.object) {
+		if(!world.enable_shadows || (!hit.object || (object.magnitude() > l.normalized().magnitude()))) {
 			r = -l + 2 * dot(l, normal) * normal;
 			r = r.normalized();
 		
