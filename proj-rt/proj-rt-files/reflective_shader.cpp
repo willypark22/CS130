@@ -7,6 +7,12 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
     const vec3& normal,int recursion_depth) const
 {
     vec3 color;
-    TODO; // determine the color
+    color = shader->Shade_Surface(ray, intersection_point, normal, recursion_depth);
+    /*vec3 d = ray.direction;
+    vec3 reflection = d - 2*dot(d, normal) * normal;
+    Ray reflectionRay(intersection_point, reflection);
+    if(recursion_depth <= world.recursion_depth_limit) {
+	color = (1 - reflectivity) * color + reflectivity * world.Cast_Ray(reflectionRay, recursion_depth + 1);
+    }*/
     return color;
 }
