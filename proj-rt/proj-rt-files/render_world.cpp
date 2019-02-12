@@ -22,24 +22,26 @@ Render_World::~Render_World()
 // to ensure that hit.dist>=small_t.
 Hit Render_World::Closest_Intersection(const Ray& ray)
 {
+    //std::cout << "Entered closest_intersection" << std::endl;
     double min_t = std::numeric_limits<double>::max();
     Hit hit;
     Hit closest = {0, 0, 0};
     for(unsigned i = 0; i < this->objects.size(); ++i) {
-        hit = this->objects.at(i)->Intersection(ray, 1);
+        hit = this->objects.at(i)->Intersection(ray, -1); //changed from 1 to -1
         if(hit.object && hit.dist < min_t  && hit.dist >= small_t) {
             min_t = hit.dist;
             closest = hit;
         }
     }
-    
+    //std::cout << "Exit closest_intersection" << std::endl;
     return closest;
 }
 
 // set up the initial view ray and call
 void Render_World::Render_Pixel(const ivec2& pixel_index)
 {
-        //  set up the initial view ray here
+    //std::cout << "Entered render pixel" << std::endl;
+    //  set up the initial view ray here
     Ray ray;
     vec3 end_point = camera.position;
     vec3 direction = camera.World_Position(pixel_index) - end_point;
@@ -47,7 +49,8 @@ void Render_World::Render_Pixel(const ivec2& pixel_index)
     ray.direction = direction;
     vec3 color = Cast_Ray(ray, 1);
     camera.Set_Pixel(pixel_index,Pixel_Color(color));
-    }
+    //std::cout << "Exit render pixel" << std::endl;
+}
 
 void Render_World::Render()
 {
@@ -67,7 +70,7 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
     Hit hit = Closest_Intersection(ray);
     if(hit.object != 0) {
         vec3 intersectionPoint = ray.Point(hit.dist);
-        vec3 norm = hit.object->Normal(intersectionPoint, 1);
+        vec3 norm = hit.object->Normal(intersectionPoint, hit.part);
         color = hit.object->material_shader->Shade_Surface(ray, intersectionPoint, norm, recursion_depth);
     }
     else {
