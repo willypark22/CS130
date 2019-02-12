@@ -4,13 +4,10 @@
 // Determine if the ray intersects with the sphere
 Hit Sphere::Intersection(const Ray& ray, int part) const
 {
-    //TODO;
-    //std::cout << "Entered sphere intersection " << std::endl;
     Hit hit;
     vec3 u = ray.direction;
     vec3 v = ray.endpoint - center;
     
-    //double a = 1; //u dot u = 1
     double a = u.magnitude_squared();
     double b = 2 * dot(u, v);
     double c = v.magnitude_squared() - (radius * radius);
